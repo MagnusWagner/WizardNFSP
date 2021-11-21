@@ -8,7 +8,14 @@ import torch
 import rlcard
 from rlcard.agents import RandomAgent
 from rlcard.utils import get_device, set_seed, tournament, reorganize, Logger, plot_curve
+'''
+TODO:
+- Special case if top card is Wizard of Fool
+- Print cards in ordered format
 
+
+
+'''
 def train(args):
 
     # Check whether gpu is available
@@ -21,13 +28,13 @@ def train(args):
     env = rlcard.make(args.env, config={'seed': args.seed})
 
     # Initialize the agent and use random agents as opponents
-    if args.algorithm == 'dqn':
-        from rlcard.agents import DQNAgent
-        agent = DQNAgent(num_actions=env.num_actions,
-                         state_shape=env.state_shape[0],
-                         mlp_layers=[64,64],
-                         device=device)
-    elif args.algorithm == 'nfsp':
+    # if args.algorithm == 'dqn':
+    #     from rlcard.agents import DQNAgent
+    #     agent = DQNAgent(num_actions=env.num_actions,
+    #                      state_shape=env.state_shape[0],
+    #                      mlp_layers=[64,64],
+    #                      device=device)
+    if args.algorithm == 'nfsp':
         from rlcard.agents import NFSPAgent
         agent = NFSPAgent(num_actions=env.num_actions,
                           state_shape=env.state_shape[0],

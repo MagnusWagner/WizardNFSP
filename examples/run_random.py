@@ -7,9 +7,16 @@ import rlcard
 from rlcard.agents import RandomAgent
 from rlcard.utils import set_seed
 
+
+DEFAULT_GAME_CONFIG = {
+        'game_num_players': 2,
+        'game_num_cards': 5,
+        'seed':None,
+        }
+
 def run(args):
     # Make environment
-    env = rlcard.make(args.env, config={'seed': 42})
+    env = rlcard.make(args.env, DEFAULT_GAME_CONFIG)
 
     # Seed numpy, torch, random
     set_seed(42)
@@ -30,10 +37,9 @@ def run(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("Random example in RLCard")
-    parser.add_argument('--env', type=str, default='leduc-holdem',
-            choices=['blackjack', 'leduc-holdem', 'limit-holdem', 'doudizhu', 'mahjong', 'no-limit-holdem', 'uno', 'gin-rummy'])
+    parser.add_argument('--env', type=str, default='wizard_simple',
+            choices=['blackjack', 'leduc-holdem', 'limit-holdem', 'doudizhu', 'mahjong', 'no-limit-holdem', 'uno', 'gin-rummy','wizard','wizard_simple'])
 
     args = parser.parse_args()
-
     run(args)
 

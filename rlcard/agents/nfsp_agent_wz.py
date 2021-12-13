@@ -32,7 +32,7 @@ from rlcard.utils.utils import remove_illegal
 
 Transition = collections.namedtuple('Transition', 'info_state action_probs')
 
-class NFSPAgent(object):
+class NFSPAgentWZ(object):
     ''' An approximate clone of rlcard.agents.nfsp_agent that uses
     pytorch instead of tensorflow.  Note that this implementation
     differs from Henrich and Silver (2016) in that the supervised
@@ -44,21 +44,21 @@ class NFSPAgent(object):
                  num_actions=4, 
                  state_shape=None,
                  hidden_layers_sizes=None,
-                 reservoir_buffer_capacity=20000,
+                 reservoir_buffer_capacity=500000, # Changed from 20K
                  anticipatory_param=0.1,
-                 batch_size=256,
-                 train_every=1,
-                 rl_learning_rate=0.1,
+                 batch_size=1024,
+                 train_every=5,
+                 rl_learning_rate=0.0005, # 0.0005 was good
                  sl_learning_rate=0.005,
-                 min_buffer_size_to_learn=100,
-                 q_replay_memory_size=20000,
-                 q_replay_memory_init_size=100,
+                 min_buffer_size_to_learn=256,
+                 q_replay_memory_size=1000000, # Changed from 20K
+                 q_replay_memory_init_size=256,
                  q_update_target_estimator_every=1000,
                  q_discount_factor=0.99,
-                 q_epsilon_start=0.06,
+                 q_epsilon_start=0.8,
                  q_epsilon_end=0,
-                 q_epsilon_decay_steps=int(1e6),
-                 q_batch_size=32,
+                 q_epsilon_decay_steps=int(1e5),
+                 q_batch_size=256, #Changed from 32
                  q_train_every=1,
                  q_mlp_layers=None,
                  evaluate_with='average_policy',
@@ -86,7 +86,7 @@ class NFSPAgent(object):
             q_epsilon_end (float): the end epsilon of inner DQN agent.
             q_epsilon_decay_steps (int): The decay steps of inner DQN agent.
             q_batch_size (int): The batch size of inner DQN agent.
-            q_train_step (int): Train the model every X steps.
+            q_train_every (int): Train the model every X steps.
             q_mlp_layers (list): The layer sizes of inner DQN agent.
             device (torch.device): Whether to use the cpu or gpu
         '''
@@ -217,7 +217,7 @@ class NFSPAgent(object):
         ''' Predict action probability givin the observation and legal actions
             Not connected to computation graph
         Args:
-            info_state (numpy.array): An obervation.
+            info_state (numpy.array): An observation.
 
         Returns:
             action_probs (numpy.array): The predicted action probability.

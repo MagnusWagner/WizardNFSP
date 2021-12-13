@@ -1,7 +1,7 @@
 import numpy as np
 
 from rlcard.games.base import Card
-
+import time
 def set_seed(seed):
     if seed is not None:
         import subprocess
@@ -220,6 +220,37 @@ def tournament(env, num):
     for i, _ in enumerate(payoffs):
         payoffs[i] /= counter
     return payoffs
+
+def get_payoff_state_combinations(env, num):
+    ''' Evaluate he performance of the agents in the environment
+
+    Args:
+        env (Env class): The environment to be evaluated.
+        num (int): The number of games to play.
+
+    Returns:
+        A list of average payoffs for each player
+    '''
+    payoffs = [0 for _ in range(env.num_players)]
+    counter = 0
+    payoff_hand_pairs_list = []
+    start = time.time()
+    while counter < num:
+        _, _payoffs = env.run(is_training=False)
+        starting_hands = env.get_encoded_starting_hands()
+        payoffs = np.transpose(np.asarray([_payoffs],dtype=np.int32))
+        payoff_hand_pairs = np.concatenate((starting_hands,payoffs),axis=1)
+        if counter == 0:
+            payoff_hand_pairs_list = payoff_hand_pairs
+        else:
+            payoff_hand_pairs_list = np.concatenate((payoff_hand_pairs_list,payoff_hand_pairs),axis=0)
+            
+        counter +=1
+        if counter % 50000 == 0:
+            took_time = time.time()-start
+            print(f"{counter} rows created which took {np.round(took_time/60,1)} minutes.")
+
+    return payoff_hand_pairs_list
 
 def plot_curve(csv_path, save_path, algorithm):
     ''' Read data from csv file and plot the results

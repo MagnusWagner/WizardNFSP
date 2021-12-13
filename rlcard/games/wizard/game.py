@@ -3,23 +3,23 @@ import numpy as np
 
 from rlcard.games.wizard import Dealer
 from rlcard.games.wizard import Player
-from rlcard.games.wizard import Round
 from rlcard.games.wizard.utils import COLOR_MAP, getPlayerOrders, cards2list
 
 
 class WizardGame:
     '''
-    TODO: Convert everything into single games (ignore round)
-    - The algorithm starts by setting up an environment and agents. Then, the environment is run (with the agents.)
-    - The environment calls the action from each agent with state as input.
-    - The steps with actions are transferred in the "game"-class which calculates what the actions mean for the state.
-
+    Sets up a whole game of wizard with all cards (all 4 colors with numbers 1 to 4, red is always trump, 4 wizards, 4 fools.)
+    Payoffs are equivalent to the number of tricks made.
     '''
-    def __init__(self, allow_step_back=False, num_players=2, num_cards = 2):
+    def __init__(self, allow_step_back=False, num_players=2, num_cards = 5, seed=None):
         self.actions_in_trick_left = num_players
         self.allow_step_back = allow_step_back
         self.direction = 1
-        self.np_random = np.random.RandomState()
+        if seed:
+            self.seed = seed
+        else:
+            self.seed = 42
+        self.np_random = np.random.RandomState(self.seed)
         self.num_cards = num_cards # number of cards for that round
         self.num_cards_left = self.num_cards
         self.num_players = num_players
@@ -29,8 +29,7 @@ class WizardGame:
         self.state = dict()
         self.trick_scores = []
         self.trick_over = False
-        self.trump_card = ""
-        self.trump_color = ""
+        self.trump_color = "r"
         self.wizard_played = False
         
 
@@ -65,15 +64,12 @@ class WizardGame:
 
         # Initialize n players to play the game
         self.players = [Player(i, self.np_random) for i in range(self.num_players)]
-
+        self.starting_player = self.players[np.random.randint(low=0,high=self.num_players)]
+        self.current_player = self.starting_player
         # Deal n cards to each player to prepare for the game
         for player in self.players:
             self.dealer.deal_cards(player, self.num_cards)
-
-
-        # flip top card
-        self.trump_card = self.flip_top_card()
-        self.trump_color = self.trump_card.color
+        self.starting_hands = self.save_starting_hands()
 
         # Save the hisory for stepping back to the last state.
         self.history = []
@@ -88,13 +84,15 @@ class WizardGame:
 
         player_id = self.current_player.player_id
         state = self.get_state(player_id)
+        # Update random state
+        self.seed +=1
+        self.np_random = np.random.RandomState(self.seed)
 
         return state, player_id
 
     def initialize_trick(self):
         '''
-        Initialize playing a trick in the game. 
-        Replaced the round class with a function, as it was too tedious to transfer all parameters to the subclass.
+        Initialize a new trick for the game. All information about the previous trick is reset.
         '''
         self.trick_over = False
         self.color_to_play = None
@@ -124,14 +122,14 @@ class WizardGame:
             his_players = deepcopy(self.players)
             self.history.append((his_dealer, his_players, his_state))
 
-        # self.round.proceed_round(self.players, action)
         if self.actions_in_trick_left == self.num_players:
             self.play_first_card(self.current_player,action)
         else:
             self.play_other_card(self.current_player,action)
         
         if self.actions_in_trick_left == 0:
-            self.starting_player = self.calculate_new_trick_scores(self.play_order)
+            self.num_cards_left -= 1
+            self.starting_player = self.calculate_new_trick_scores(self.current_play_order)
             if not self.current_player.hand:
                 self.is_over = True
             else: 
@@ -141,7 +139,8 @@ class WizardGame:
         return state, player_id
 
     def step_back(self):
-        ''' Return to the previous state of the game
+        ''' 
+        Return to the previous state of the game, not really used by Wizard (and only necessary for CFR-Agents.)
 
         Returns:
             (bool): True if the game steps back successfully
@@ -151,24 +150,19 @@ class WizardGame:
         self.dealer, self.players, self.state = self.history.pop()
         return True
 
-    def flip_top_card(self):
-        ''' Flip the top card of the card pile
+    def is_over(self):
+        ''' Is the game over?
 
         Returns:
-            (object of WizardCard): the top card in game
-
+            (bool): True if game is over
         '''
-        top = self.dealer.flip_top_card()
-        # self.target = top
-        self.played_cards.append(top)
-        self.trump_color = top.color
-        return top
+        return self.is_over
 
     def get_state(self, player_id):
         ''' Return player's state
 
         Args:
-            player_id (int): player id
+            player_id (int): player id 
 
         Returns:
             (dict): The state of the player
@@ -176,27 +170,30 @@ class WizardGame:
         player = self.players[player_id]
         # Direct information
         self.state['hand'] = cards2list(player.hand)
+        self.state['current_player'] = self.current_player.player_id
         self.state['color_to_play'] = self.color_to_play
         self.state['played_cards'] = cards2list(self.played_cards)
         self.state['played_cards_in_trick'] = cards2list(self.played_cards_in_trick)
-        self.state['trump_color'] = self.trump_color
+
         # Meta information
-        self.state['legal_actions'] = self.get_legal_actions(self.players, player_id)
+        self.state['legal_actions'] = self.get_legal_actions()
         self.state['num_cards_left'] = self.num_cards_left
         self.state['actions_in_trick_left'] = self.actions_in_trick_left
         self.state['player_without_color'] = self.player_without_color
         self.state['wizard_played'] = self.wizard_played
-        # needed for later with actual predictions for number of tricks
-        # self.state[''] = self.trick_scores = [0 for _ in range(self.num_players)]
+        self.state['trick_scores'] = self.trick_scores
+
         return self.state
 
     def get_payoffs(self):
         ''' Return the payoffs of the game
 
+        As this version is about maximizing number of tricks, the payoffs are proportional to the number of tricks made.
+
         Returns:
             (list): Each entry corresponds to the payoff of one player
         '''
-        return self.trick_scores
+        return np.array(self.trick_scores)
 
 
     def get_num_players(self):
@@ -207,14 +204,13 @@ class WizardGame:
         '''
         return self.num_players
 
-    @staticmethod
     def get_num_actions(self):
         ''' Return the number of applicable actions
 
         Returns:
             (int): The number of actions. There are 60 actions
         '''
-        return self.num_cards
+        return 60
 
     def get_player_id(self):
         ''' Return the current player's id
@@ -226,14 +222,15 @@ class WizardGame:
 
     # Extra functions for Wizard 
 
-    def get_legal_actions(self, players, player_id):
+    def get_legal_actions(self):
         ''' Return the legal actions for current player
 
         Returns:
             (list): A list of legal actions
         '''
         legal_actions = []
-        hand = players[player_id].hand
+        player_id = self.current_player.player_id
+        hand = self.players[player_id].hand
         if not self.color_to_play:
             legal_actions+=[card.str for card in hand]
         else:
@@ -285,8 +282,9 @@ class WizardGame:
         self.played_cards_in_trick.append(card)
         self.current_player = self.players[(self.current_player.player_id + self.direction) % self.num_players]
         self.actions_in_trick_left -= 1
-        self.num_cards_left -= 1
 
+
+    
     def play_other_card(self,player,action):
         '''
         Play a card which is not the first card in a trick.
@@ -320,9 +318,17 @@ class WizardGame:
         # Next player
         self.current_player = self.players[(self.current_player.player_id + self.direction) % self.num_players]
         self.actions_in_trick_left -= 1
-        self.num_cards_left -= 1
 
     def calculate_new_trick_scores(self,play_order):
+        '''
+        This calculation is based on the Wizard rules. The trick_scores are updated regarding the person who won the trick.
+        Some small sample rules:
+            - First Wizard in a trick always wins the trick.
+            - Trump cards (red) are always higher than other coloured number cards.
+            - Higher numbers of the color_to_play get the trick if no trump or wizard was played.
+        
+        return: Player who won the trick.
+        '''
         card_scores = [0 for _ in self.played_cards_in_trick]
         wizard_scorer = 4
         fool_scorer = 4
@@ -342,3 +348,15 @@ class WizardGame:
         trick_winner_idx = play_order[np.argmax(card_scores)]
         self.trick_scores[trick_winner_idx] += 1
         return self.players[trick_winner_idx]
+
+    def save_starting_hands(self):
+        '''
+        Returns the starting_hands in list format.
+        '''
+        return_list = []
+        for player in self.players:
+            return_list.append(cards2list(player.hand))
+        return return_list
+
+    def get_starting_hands(self):
+        return self.starting_hands

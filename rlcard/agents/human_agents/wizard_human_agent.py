@@ -1,4 +1,7 @@
-from rlcard.games.wizard.card import WizardCard
+
+from rlcard.games.wizard_simple.card import WizardCard
+from rlcard.games.wizard_simple.utils import COLOR_MAP_WORDS
+from termcolor import colored
 
 class HumanAgent(object):
     ''' A human agent for Wizard. It can be used to play against trained models
@@ -23,12 +26,13 @@ class HumanAgent(object):
         Returns:
             action (int): The action decided by human
         '''
-        print(state['raw_obs'])
+        # print(state['raw_obs'])
         _print_state(state['raw_obs'], state['action_record'])
         action = int(input('>> You choose action (integer): '))
         while action < 0 or action >= len(state['legal_actions']):
             print('Action illegal...')
             action = int(input('>> Re-choose action (integer): '))
+
         return state['raw_legal_actions'][action]
 
     def eval_step(self, state):
@@ -57,10 +61,16 @@ def _print_state(state, action_record):
         print('>> Player', pair[0], 'chooses ', end='')
         _print_action(pair[1])
         print('')
+    print('\n=============== Current score ===============')
+    print(["P"+str(idx)+": "+str(score) for idx, score in enumerate(state['trick_scores'])])
+    print('\n=============== This Trick ===============')
+    WizardCard.print_cards(state['played_cards_in_trick'])
+    print('\n=============== Trump Color: ',colored(COLOR_MAP_WORDS["r"], COLOR_MAP_WORDS["r"]),' ===============')
+    if state['color_to_play']:
+        print("\nColor to play:",colored(COLOR_MAP_WORDS[state['color_to_play']], COLOR_MAP_WORDS[state['color_to_play']]))
+    else:
+        print("\nChoose any color")
 
-
-    print('=============== This Trick ===============')
-    WizardCard.print_cards(state['cards_played_in_trick'],card)
     print('')
     print('\n=============== Your Hand ===============')
     WizardCard.print_cards(state['hand'])
@@ -69,7 +79,7 @@ def _print_state(state, action_record):
     # for i in range(state['num_players']):
     #     if i != state['current_player']:
     #         print('Player {} has {} cards.'.format(i, state['num_cards'][i]))
-    print('======== Actions You Can Choose =========')
+    print('======== P',state["current_player"],': Possible actions =========')
     for i, action in enumerate(state['legal_actions']):
         print(str(i)+': ', end='')
         WizardCard.print_cards(action)

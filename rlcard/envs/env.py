@@ -41,12 +41,12 @@ class Env(object):
         # Get the number of players/actions in this game
         self.num_players = self.game.get_num_players()
         self.num_actions = self.game.get_num_actions()
-
+        
         # A counter for the timesteps
         self.timestep = 0
 
         # Set random seed, default is None
-        self.seed(config['seed'])
+        self.seed = config['seed']
 
 
     def reset(self):
@@ -155,7 +155,7 @@ class Env(object):
             player_id = next_player_id
 
             # Save state.
-            if not self.game.is_over():
+            if not self.game.is_over:
                 trajectories[player_id].append(state)
 
         # Add a final state to all the players
@@ -169,12 +169,12 @@ class Env(object):
         return trajectories, payoffs
 
     def is_over(self):
-        ''' Check whether the curent game is over
+        ''' Check whether the current game is over
 
         Returns:
             (boolean): True if current game is over
         '''
-        return self.game.is_over()
+        return self.game.is_over
 
     def get_player_id(self):
         ''' Get the current player id

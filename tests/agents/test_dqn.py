@@ -32,11 +32,13 @@ class TestDQN(unittest.TestCase):
 
         memory_init_size = 100
         num_steps = 500
+        batch_size=100
 
         agent = DQNAgent(replay_memory_size = 200,
                          replay_memory_init_size=memory_init_size,
                          update_target_estimator_every=100,
                          state_shape=[2],
+                         batch_size=batch_size,
                          mlp_layers=[10,10],
                          device=torch.device('cpu'))
 
@@ -51,3 +53,9 @@ class TestDQN(unittest.TestCase):
         predicted_action = agent.step({'obs': np.random.random_sample((2,)), 'legal_actions': {0: None, 1: None}})
         self.assertGreaterEqual(predicted_action, 0)
         self.assertLessEqual(predicted_action, 1)
+
+
+
+        
+if __name__ == '__main__':
+    unittest.main()

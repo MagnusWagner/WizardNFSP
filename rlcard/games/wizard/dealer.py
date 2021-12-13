@@ -25,15 +25,15 @@ class WizardDealer:
         for _ in range(num):
             player.hand.append(self.deck.pop())
 
-    def flip_top_card(self):
-        ''' Flip top card when a new game starts
+    # def flip_top_card(self):
+    #     ''' Flip top card when a new game starts
 
-        Returns:
-            (object): The object of UnoCard at the top of the deck
-        '''
-        top_card = self.deck.pop()
-        while top_card.trait == 'wizard' or top_card.trait == 'fool':
-            self.deck.append(top_card)
-            self.shuffle()
-            top_card = self.deck.pop()
-        return top_card
+    #     Returns:
+    #         (object): The object of UnoCard at the top of the deck
+    #     '''
+    #     top_card = self.deck.pop()
+    #     while top_card.trait == 'wizard' or top_card.trait == 'fool':
+    #         self.deck.append(top_card)
+    #         self.shuffle()
+    #         top_card = self.deck.pop()
+    #     return top_card

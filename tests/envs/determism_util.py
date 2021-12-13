@@ -2,6 +2,7 @@ import rlcard
 from rlcard.agents.random_agent import RandomAgent
 import random
 import numpy as np
+import warnings
 
 def hash_obsevation(obs):
     try:
@@ -39,7 +40,7 @@ def gather_observations(env, actions, num_rand_steps):
 
         action_idx += 1
         # Save state.
-        if not env.game.is_over():
+        if not env.game.is_over:
             observations.append(state)
 
     return observations

@@ -1,45 +1,49 @@
-# RLCard: A Toolkit for Reinforcement Learning in Card Games
-<img width="500" src="https://dczha.com/files/rlcard/logo.jpg" alt="Logo" />
+# Wizard - Neural Fictitious Self-Play
 
-[![Build Status](https://travis-ci.org/datamllab/RLCard.svg?branch=master)](https://travis-ci.org/datamllab/RLCard)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/248eb15c086748a4bcc830755f1bd798)](https://www.codacy.com/manual/daochenzha/rlcard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=datamllab/rlcard&amp;utm_campaign=Badge_Grade)
-[![Coverage Status](https://coveralls.io/repos/github/datamllab/rlcard/badge.svg)](https://coveralls.io/github/datamllab/rlcard?branch=master)
-[![Downloads](https://pepy.tech/badge/rlcard)](https://pepy.tech/project/rlcard)
-[![Downloads](https://pepy.tech/badge/rlcard/month)](https://pepy.tech/project/rlcard)
+For my project in *Applied Deep Learning* @ TU Vienna, I trained a Neural Fictitious Self-Play agent that is able to play the popular card game Wizard. Wizard is a great example to simulate as the complexity rises with the number of players and the number of cards to be played. The game is trick-based: a game is split into several trick rounds which can only be won by one player. Next to 4 colors of number cards, there are two types of special cards and a prediction round before the actual game which increases the complexity even more. The complete rule set can be found inside of the [repository](Wizard_Rules.pdf). The environment is built on top of the  [RLCard framework](https://www.rlcard.org).
 
-[中文文档](README.zh-CN.md)
+## Get started
 
-RLCard is a toolkit for Reinforcement Learning (RL) in card games. It supports multiple card environments with easy-to-use interfaces for implementing various reinforcement learning and searching algorithms. The goal of RLCard is to bridge reinforcement learning and imperfect information games. RLCard is developed by [DATA Lab](http://faculty.cs.tamu.edu/xiahu/) at Texas A&M University and community contributors.
+### Installation of the rlcard library
+Make sure that you have **Python 3.6+** and **pip** installed. I recommend installing the stable version of `rlcard` with `pip`:
 
-*   Official Website: [https://www.rlcard.org](https://www.rlcard.org)
-*   Tutorial in Jupyter Notebook: [https://github.com/datamllab/rlcard-tutorial](https://github.com/datamllab/rlcard-tutorial)
-*   Paper: [https://arxiv.org/abs/1910.04376](https://arxiv.org/abs/1910.04376)
-*   GUI: [RLCard-Showdown](https://github.com/datamllab/rlcard-showdown)
-*   Dou Dizhu Demo: [Demo](https://douzero.org/)
-*   Resources: [Awesome-Game-AI](https://github.com/datamllab/awesome-game-ai)
-*   Related Project: [DouZero Project](https://github.com/kwai/DouZero)
+```
+pip3 install rlcard
+```
 
-**Community:**
-*  **Slack**: Discuss in our [#rlcard-project](https://join.slack.com/t/rlcard/shared_invite/zt-rkvktsaq-xkMwz8BfKupCM6zGhO01xg) slack channel.
-*  **QQ Group**: Join our QQ group 665647450. Password: rlcardqqgroup
+Conda installation is also provided from rlcard. [**conda** installation method](https://anaconda.org/toubun/rlcard):
 
-**News:**
-*   Please follow [DouZero](https://github.com/kwai/DouZero), a strong Dou Dizhu AI and the [ICML 2021 paper](https://arxiv.org/abs/2106.06135). An online demo is available [here](https://douzero.org/). The algorithm is also integrated in RLCard. See [Training DMC on Dou Dizhu](docs/toy-examples.md#training-dmc-on-dou-dizhu).
-*   Our package is used in [PettingZoo](https://github.com/PettingZoo-Team/PettingZoo). Please check it out!
-*   We have released RLCard-Showdown, GUI demo for RLCard. Please check out [here](https://github.com/datamllab/rlcard-showdown)!
-*   Jupyter Notebook tutorial available! We add some examples in R to call Python interfaces of RLCard with reticulate. See [here](docs/toy-examples-r.md)
-*   Thanks for the contribution of [@Clarit7](https://github.com/Clarit7) for supporting different number of players in Blackjack. We call for contributions for gradually making the games more configurable. See [here](CONTRIBUTING.md#making-configurable-environments) for more details.
-*   Thanks for the contribution of [@Clarit7](https://github.com/Clarit7) for the Blackjack and Limit Hold'em human interface.
-*   Now RLCard supports environment local seeding and multiprocessing. Thanks for the testing scripts provided by [@weepingwillowben](https://github.com/weepingwillowben).
-*   Human interface of NoLimit Holdem available. The action space of NoLimit Holdem has been abstracted. Thanks for the contribution of [@AdrianP-](https://github.com/AdrianP-).
-*   New game Gin Rummy and human GUI available. Thanks for the contribution of [@billh0420](https://github.com/billh0420).
-*   PyTorch implementation available. Thanks for the contribution of [@mjudell](https://github.com/mjudell).
+```
+conda install -c toubun rlcard
+```
 
-## Cite this work
-If you find this repo useful, you may cite:
+### Download of pretrained models and experiment results
 
-Zha, Daochen, et al. "RLCard: A Platform for Reinforcement Learning in Card Games." IJCAI. 2020.
-```bibtex
+WARNING: PLACEHOLDER! ALSO ADD FURTHER BELOW
+
+To play against pre-trained models, you need to download a zip from [this link](https://drive.google.com/drive/folders/1SojZP7x6xBqEqGC9WhyDzt5SP818F3fN?usp=sharing) and merge it with the [/experiments](/experiments) folder found in this repository. 
+
+### Other dependencies
+
+```
+pip install xgboost
+```
+- Install PyTorch from https://pytorch.org/.
+
+## RLCard Framework
+
+The whole wizard environment is built on top of the [RLCard framework](https://www.rlcard.org). The following description is from their website.
+
+> **RLCard: A Toolkit for Reinforcement Learning in Card Games**
+>
+>RLCard is a toolkit for Reinforcement Learning (RL) in card games. It supports multiple card environments with easy-to-use interfaces for implementing various reinforcement learning and searching algorithms. The goal of RLCard is to bridge reinforcement learning and imperfect information games. RLCard is developed by [DATA Lab](http://faculty.cs.tamu.edu/xiahu/) at Texas A&M University and community contributors.
+> 
+> *   [GitHub](https://github.com/datamllab/rlcard)
+> *   Official Website: [https://www.rlcard.org](https://www.rlcard.org)
+> *   Paper: [https://arxiv.org/abs/1910.04376](https://arxiv.org/abs/1910.04376)
+> 
+> Zha, Daochen, et al. "RLCard: A Platform for Reinforcement Learning in Card Games." IJCAI. 2020.
+```
 @inproceedings{zha2020rlcard,
   title={RLCard: A Platform for Reinforcement Learning in Card Games},
   author={Zha, Daochen and Lai, Kwei-Herng and Huang, Songyi and Cao, Yuanpu and Reddy, Keerthana and Vargas, Juan and Nguyen, Alex and Wei, Ruzhe and Guo, Junyu and Hu, Xia},
@@ -48,149 +52,176 @@ Zha, Daochen, et al. "RLCard: A Platform for Reinforcement Learning in Card Game
 }
 ```
 
-## Installation
-Make sure that you have **Python 3.6+** and **pip** installed. We recommend installing the stable version of `rlcard` with `pip`:
+As all scripts/functions are adaptions from other environment implementations of this repository, it should be useful to check out their [GitHub](https://github.com/datamllab/rlcard) to understand how the most basic concepts work. At the bottom of this README, some important extracts from their documentation are provided.
 
+## Learner environment
+
+As datasets, I created three different versions of the game Wizard.
+
+| Attribute                                  | Wizard                                               | Wizard_Simple  | Wizard_Most_Simple                                          |
+| :------ | :-----: | :-----: | :-----: |
+|No. of states | ~255 | ~110 | ~50
+|No. of cards & actions | 60| 24 |12
+|No. of colors| 4| 4 | 4
+|Range of number cards| 1-13| 1-4| 1-3
+|No. of Wizard & Fool Cards| 4+4 | 4+4 | 0+0
+|Trump Color| red | red | red
+|File Prefix | [wizard](rlcard/games/wizard) | [wizard_simple](rlcard/games/wizard_simple) | [wizard_most_simple](rlcard/games/wizard_most_simple)
+
+The *Wizard* Environment is the default environment with all rules of the actual game except for two things: Usually, a card is drawn at the start of the game to determine the trump color. As it does not matter which color is drawn, I chose to implement the game with "red" always being the trump color and no option to not have a trump color. Additionally, the game rewards are only decided by the number of tricks made by each player. The trick prediction system is excluded for these first variants but was added later on.
+
+The other two versions were created to reduce the number of possible actions and states so that the Reinforcement Learner can converge faster. Due to the relatively higher ratio of special cards that can be played anytime in *wizard_simple*, the complexity is still quite high. In *wizard_most_simple*, the number of possible actions is reduced even further and complexity is much lower as well due to the removal of Wizard- & Fool-Cards.
+
+### Trick predictions
+
+For *wizard_simple* and *wizard_most_simple* (currently not for default *Wizard*), I created variants that included the trick prediction system of wizard. This means that each player has information about its hand cards and has to decide how many tricks can be made from them. If the player misses the predicted number of tricks, he will get a negative score for each wrongly predicted trick. For correct predictions, the players gets 20P + 10P for each trick that was made by him.  For the reinforcement agent, this is quite difficult to train as the action of selecting an integer number inside of a range is pretty different from selecting a card to play.
+
+The file prefixes for those variants are called `wizard_s_trickpreds` and `wizard_ms_trickpreds`.
+
+## Library Structure
+The purposes of the main modules are listed as below:
+
+*   [**/examples**](examples)**: Main-Folder:** Scripts to run different Wizard environments.
+*   [/tests](tests): Testing scripts. (*Currently not implemented for wizard*)
+* [/experiments](experiments): Experiment results and pre-trained models.
+*   [/rlcard/agents](rlcard/agents): Reinforcement learning algorithms and human agents.
+*   [/rlcard/envs](rlcard/envs): Environment wrappers (state representation, action encoding etc.)
+*   [/rlcard/games](rlcard/games): The five wizard game engines are found in here.
+
+## Run some examples
+
+In this section, I will explain how to run different examples.
+
+### Playing against agents or other humans.
+The interesting examples might be playing as a human against a pretrained agent. This is currently possible with the *wizard_simple*-variant and the *wizard_most_simple*-variant for games with trick predictions and with all variants for games with trick maximization. To run the scripts, simply execute them with after cloning the repository, installing necessary dependencies and inserting the bot-files into the right folder from [GoogleDrive](https://drive.google.com/drive/folders/1SojZP7x6xBqEqGC9WhyDzt5SP818F3fN?usp=sharing).
+
+```bash
+python examples/human/run_wizard_human_trickpred.py
 ```
-pip3 install rlcard
+or
+```bash
+python examples/human/run_wizard_human.py
 ```
-The default installation will only include the card environments. To use PyTorch implementation of the training algorithms, run
+The *trickpred*-variant involves the human player choosing the number of tricks to make, the other variant is only about making as many tricks as possible.
+
+Optional arguments are:
 ```
-pip3 install rlcard[torch]
-```
-If you are in China and the above command is too slow, you can use the mirror provided by Tsinghua University:
-```
-pip3 install rlcard -i https://pypi.tuna.tsinghua.edu.cn/simple
-```
-Alternatively, you can clone the latest version with (if you are in China and Github is slow, you can use the mirror in [Gitee](https://gitee.com/daochenzha/rlcard)):
-```
-git clone https://github.com/datamllab/rlcard.git
-```
-or only clone one branch to make it faster:
-```
-git clone -b master --single-branch --depth=1 https://github.com/datamllab/rlcard.git
-```
-Then install with
-```
-cd rlcard
-pip3 install -e .
-pip3 install -e .[torch]
+--env : Environment to use -> choices = ['wizard_s_trickpreds',"wizard_ms_trickpreds"]
+--seed : Seed to use -> int
+--n_human players : How many human players will play? -> choices=[1,2]
+--opponent : Which type of opponent? -> choices=['nfsp','random']
+--load_path_agent : Path for the agent model
 ```
 
-We also provide [**conda** installation method](https://anaconda.org/toubun/rlcard):
+## Training agents
 
+To train agents on the environment, you can run the two following files in the `examples`-folder:
+
+### Training without trick predictions
+
+When training **without trick predictions**, the RL algorithm maximizes the number of tricks as positive rewards after a game. 
+
+Run:
+```bash
+python examples/human/run_wizard.py
 ```
-conda install -c toubun rlcard
+with options:
 ```
-
-Conda installation only provides the card environments, you need to manually install Pytorch on your demands.
-
-## Examples
-A **short example** is as below.
-
-```python
-import rlcard
-from rlcard.agents import RandomAgent
-
-env = rlcard.make('blackjack')
-env.set_agents([RandomAgent(num_actions=env.num_actions)])
-
-print(env.num_actions) # 2
-print(env.num_players) # 1
-print(env.state_shape) # [[2]]
-print(env.action_shape) # [None]
-
-trajectories, payoffs = env.run()
+    --env : Environment to use -> choices = ['wizard',"wizard_simple","wizard_most_simple"]
+    --algorithm : RL Algorithm to use -> choices = ['nfsp','dqn']
+    --seed : Seed to use -> int
+    --load_model : continue the training of an existing model? Only possible with a model.pth-file inside of the log_dir -> Bool
+    --random_opponent : train against a random opponent?  Only possible with a opponent_model.pth-file inside of the log_dir -> Bool
+    --num_episodes : How many episodes to train for? -> int
+    --num_eval_games : How many evaluation games to average on? -> int
+    --evaluate_every : How many steps until evaluation? -> int
+    --log_dir: Path for the log-file and for the model.pth-file.
 ```
+With the current default values, you do not need additional settings.
+Other settings like hyperparameters can be changed inside of the file, but the current values are suitable for training. If you load a model, the model is saved as `model_opponent.pth` inside the log directory and can be used to train against.
 
-RLCard can be flexibly connected to various algorithms. See the following examples:
+### Creating a database of played games with agents trying to maximize number of tricks
 
-*   [Playing with random agents](docs/toy-examples.md#playing-with-random-agents)
-*   [Deep-Q learning on Blackjack](docs/toy-examples.md#deep-q-learning-on-blackjack)
-*   [Training CFR (chance sampling) on Leduc Hold'em](docs/toy-examples.md#training-cfr-on-leduc-holdem)
-*   [Having fun with pretrained Leduc model](docs/toy-examples.md#having-fun-with-pretrained-leduc-model)
-*   [Training DMC on Dou Dizhu](docs/toy-examples.md#training-dmc-on-dou-dizhu)
-*   [Evaluating Agents](docs/toy-examples.md#evaluating-agents)
+To find out which hand cards can lead to which trick scores, you can simply let two trained agents play against each other and track the number of tricks that were won by each player. This process is automated with the `create_dataset`-script in the `\examples` folder. Some options are
 
-## Demo
-Run `examples/human/leduc_holdem_human.py` to play with the pre-trained Leduc Hold'em model. Leduc Hold'em is a simplified version of Texas Hold'em. Rules can be found [here](docs/games.md#leduc-holdem).
+    --env: choices=['wizard','wizard_simple','wizard_most_simple']
+    --save-path: Where to save the dataset.
+    --models: model_paths for models to play against each other -> list
+    --seed: Random seed
+    --num_games: How many games to play, determines the size of the dataset and should be dependent on the environment you want to create the dataset for.
+    
 
+### Processing the dataset and training an XGB Model to predict no. of tricks from hand cards
+
+Now that we have a dataset, we can let a simple ML model predict the number of tricks that can be made from our hand cards. The most simple approach would have been to just average and round the number of tricks that were made but an XGB Model is also quite simple and works well on datasets with many binary variables.
+
+The model training pipeline is inside of this [Jupyter Notebook](XGB_Model_Training_Notebook.ipynb) in the main folder. You need to change the input path to load in the correct dataset.
+
+The XGB model is saved as a .json-file with the format XPYC in the path of your model environment: `/rlcard/games/{MODEL_VARIANT}_trickpreds/xgb_models/{x}P{y}C.json'`.
+- {MODEL_VARIANT} is the variant of the model you trained it for.
+- {x} is the number of players.
+- {y} is the number of maximum cards in that game.
+
+You should change the path to that format before saving the model from the notebook.
+
+### Training with trick predictions
+
+When training **with trick predictions**, the RL algorithm maximizes the game score with a reward calculation based on the wizard rules.  For the algorithm to run without any pre-trained data/model, you need to do the following steps:
+
+1. Run **training without trick predictions** in your environment to train a model that maximizes for number of tricks.
+2. **Create a dataset** from this model playing against itself to determine viable number of tricks to get from hand cards.
+3. **Train an XGB Model** from the dataset and insert it at the right place.
+4. Run **training with trick predictions**.
+
+As the previous steps were already explained, the last step can be accomplished with the following script:
+```bash
+python examples/run_wizard_trickpred.py
 ```
->> Leduc Hold'em pre-trained model
+The options are the same as for the training without trick prediction. The only difference are the choices for the environment: ` ["wizard_ms_trickpreds, wizard_s_trickpreds"]`
 
->> Start a new game!
->> Agent 1 chooses raise
+## Results & Tests
 
-=============== Community Card ===============
-┌─────────┐
-│░░░░░░░░░│
-│░░░░░░░░░│
-│░░░░░░░░░│
-│░░░░░░░░░│
-│░░░░░░░░░│
-│░░░░░░░░░│
-│░░░░░░░░░│
-└─────────┘
-===============   Your Hand    ===============
-┌─────────┐
-│J        │
-│         │
-│         │
-│    ♥    │
-│         │
-│         │
-│        J│
-└─────────┘
-===============     Chips      ===============
-Yours:   +
-Agent 1: +++
-=========== Actions You Can Choose ===========
-0: call, 1: raise, 2: fold
+To test if the game engine actually works, I implemented human examples where you can play against yourself as previously mentioned. They show that the general game engine works by displaying correct states in correct order. Further tests of the game engine itself were not really necessary as a lot of time was spent in debugging mode fixing logical errors that led to the game not running correctly until everything worked perfectly.
 
->> You choose action (integer):
-```
-We also provide a GUI for easy debugging. Please check [here](https://github.com/datamllab/rlcard-showdown/). Some demos:
+I still ran some pre-implemented **unit tests** from the RLCard repository (found in the `\tests`-folder ) for agents, envs and game engines and fixed my code until no errors were raised. Those fixes mostly had to do with unclean code but did not improve training efficacy.
 
-![doudizhu-replay](https://github.com/datamllab/rlcard-showdown/blob/master/docs/imgs/doudizhu-replay.png?raw=true)
-![leduc-replay](https://github.com/datamllab/rlcard-showdown/blob/master/docs/imgs/leduc-replay.png?raw=true)
+Next to running the game, the engine interface also needs to work so that the agents can train on the transmitted game state, possible legal actions and further information. This can easily be checked by running the RL-Training-Scripts and looking for performance improvement over time. Therefore, I tracked the progress of the learners and visualized it with matplotlib (Same  [notebook](XGB_Model_Training_Notebook.ipynb) as the XGB Learner). The results can be observed in the following graphs.
 
-## Available Environments
-We provide a complexity estimation for the games on several aspects. **InfoSet Number:** the number of information sets; **InfoSet Size:** the average number of states in a single information set; **Action Size:** the size of the action space. **Name:** the name that should be passed to `rlcard.make` to create the game environment. We also provide the link to the documentation and the random example.
+#### Default Wizard Engine Training with NFSP
+![Default Wizard Engine Training with NFSP](/experiments/wizard_nfsp_result/model_improvement.png)
+#### Wizard_Simple Engine Training with NFSP
+![Wizard_Simple Engine Training with NFSP](/experiments/wizard_simple_nfsp_result/model_improvement.png)
+#### Wizard_Most_Simple Engine Training with NFSP
+![Wizard_Most_Simple Engine Training with NFSP](/experiments/wizard_most_simple_nfsp_result/model_improvement.png)
 
-| Game                                                                                                                                                                                           | InfoSet Number  | InfoSet Size      | Action Size | Name            | Usage                                                                                       |
-| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------: | :---------------: | :---------: | :-------------: | :-----------------------------------------------------------------------------------------: |
-| Blackjack ([wiki](https://en.wikipedia.org/wiki/Blackjack), [baike](https://baike.baidu.com/item/21%E7%82%B9/5481683?fr=aladdin))                                                              | 10^3            | 10^1              | 10^0        | blackjack       | [doc](docs/games.md#blackjack), [example](examples/blackjack_random.py)                     |
-| Leduc Hold’em ([paper](http://poker.cs.ualberta.ca/publications/UAI05.pdf))                                                                                                                    | 10^2            | 10^2              | 10^0        | leduc-holdem    | [doc](docs/games.md#leduc-holdem), [example](examples/leduc_holdem_random.py)               |
-| Limit Texas Hold'em ([wiki](https://en.wikipedia.org/wiki/Texas_hold_%27em), [baike](https://baike.baidu.com/item/%E5%BE%B7%E5%85%8B%E8%90%A8%E6%96%AF%E6%89%91%E5%85%8B/83440?fr=aladdin))    | 10^14           | 10^3              | 10^0        | limit-holdem    | [doc](docs/games.md#limit-texas-holdem), [example](examples/limit_holdem_random.py)         |
-| Dou Dizhu ([wiki](https://en.wikipedia.org/wiki/Dou_dizhu), [baike](https://baike.baidu.com/item/%E6%96%97%E5%9C%B0%E4%B8%BB/177997?fr=aladdin))                                               | 10^53 ~ 10^83   | 10^23             | 10^4        | doudizhu        | [doc](docs/games.md#dou-dizhu), [example](examples/doudizhu_random.py)                      |
-| Mahjong ([wiki](https://en.wikipedia.org/wiki/Competition_Mahjong_scoring_rules), [baike](https://baike.baidu.com/item/%E9%BA%BB%E5%B0%86/215))                                                | 10^121          | 10^48             | 10^2        | mahjong         | [doc](docs/games.md#mahjong), [example](examples/mahjong_random.py)                         | 
-| No-limit Texas Hold'em ([wiki](https://en.wikipedia.org/wiki/Texas_hold_%27em), [baike](https://baike.baidu.com/item/%E5%BE%B7%E5%85%8B%E8%90%A8%E6%96%AF%E6%89%91%E5%85%8B/83440?fr=aladdin)) | 10^162          | 10^3              | 10^4        | no-limit-holdem | [doc](docs/games.md#no-limit-texas-holdem), [example](examples/nolimit_holdem_random.py)    |
-| UNO ([wiki](https://en.wikipedia.org/wiki/Uno_\(card_game\)), [baike](https://baike.baidu.com/item/UNO%E7%89%8C/2249587))                                                                      |  10^163         | 10^10             | 10^1        | uno             | [doc](docs/games.md#uno), [example](examples/uno_random.py)                                 |
-| Gin Rummy ([wiki](https://en.wikipedia.org/wiki/Gin_rummy), [baike](https://baike.baidu.com/item/%E9%87%91%E6%8B%89%E7%B1%B3/3471710))                                                         | 10^52           | -                 | -           | gin-rummy       | [doc](docs/games.md#gin-rummy), [example](examples/gin_rummy_random.py)                     |
+The first three graphs show that training without trick predictions led to model improvement over time. Usually, I would have waited until convergence, but as my system (Ryzen 5 3600XT, Geforce RTX 3060 Ti) already took a lot of time for training, I usually stopped when the results were significantly better than random results.
 
-## Supported Algorithms
-| Algorithm | example | reference |
-| :--------------------------------------: | :-----------------------------------------: | :------------------------------------------------------------------------------------------------------: |
-| Deep Monte-Carlo (DMC)                   | [examples/run\_dmc.py](examples/run_dmc.py) | [[paper]](https://arxiv.org/abs/2106.06135)                                                              |
-| Deep Q-Learning (DQN)                    | [examples/run\_rl.py](examples/run_rl.py)   | [[paper]](https://arxiv.org/abs/1312.5602)                                                               |
-| Neural Fictitious Self-Play (NFSP)       | [examples/run\_rl.py](examples/run_rl.py)   | [[paper]](https://arxiv.org/abs/1603.01121)                                                              |
-| Counterfactual Regret Minimization (CFR) | [examples/run\_cfr.py](examples/run_cfr.py) | [[paper]](http://papers.nips.cc/paper/3306-regret-minimization-in-games-with-incomplete-information.pdf) |
+#### Default Wizard Engine Training with NFSP and Trick Prediction
+[CURRENTLY NOT YET AVAILABLE]
+#### Wizard_Simple Engine Training with NFSP and Trick Prediction
+![Wizard_Simple Engine Training with NFSP and Trick Prediction](experiments/wizard_s_trickpreds_result_nfsp/model_improvement.png)
+#### Wizard_Most_Simple Engine Training with NFSP and Trick Prediction
+![Wizard_Most_Simple Engine Training with NFSP and Trick Prediction](experiments/wizard_ms_trickpreds_result_nfsp/model_improvement.png)
 
-## Pre-trained and Rule-based Models
-We provide a [model zoo](rlcard/models) to serve as the baselines.
+The next graphs show performance on the game engine with trick prediction. It can be observed that the results slowly improve. Values of ~10 are not that good yet. When playing average games with 50% winrate and completely random guesses, a value of 10 would be a reasonable average as each correct prediction would result in 45 points on average whereas each wrong prediction would result in -25 points on average. As random agents perform worse, the baseline winrate is therefore lower than 50%. A maximum value of 18.35 for the most simple variant represents a good performance in comparison. It becomes obvious that the more complex environments need much longer training times as the state and legal action space is much larger.
 
-| Model                                    | Explanation                                              |
-| :--------------------------------------: | :------------------------------------------------------: |
-| leduc-holdem-cfr                         | Pre-trained CFR (chance sampling) model on Leduc Hold'em |
-| leduc-holdem-rule-v1                     | Rule-based model for Leduc Hold'em, v1                   |
-| leduc-holdem-rule-v2                     | Rule-based model for Leduc Hold'em, v2                   |
-| uno-rule-v1                              | Rule-based model for UNO, v1                             |
-| limit-holdem-rule-v1                     | Rule-based model for Limit Texas Hold'em, v1             |
-| doudizhu-rule-v1                         | Rule-based model for Dou Dizhu, v1                       |
-| gin-rummy-novice-rule                    | Gin Rummy novice rule model                              |
+Both graphs had training times of about 6h each. [Other](https://arxiv.org/abs/1603.01121) [researchers](https://towardsdatascience.com/douzero-mastering-doudizhu-with-reinforcement-learning-864363549c6a) were training for several days with Multi-GPUs on similarly complex environments with other neural RL algorithms until convergence was achieved. Therefore, one can expect further improvement when training for longer on this environment as well.
 
-## API Cheat Sheet
-### How to create an environment
+
+
+
+------------
+
+
+------------
+
+
+------------
+
+
+## Further potentially relevant RLCard documentation (from RLCard)
+### API Cheat Sheet
+#### How to create an environment
 You can use the the following interface to make an environment. You may optionally specify some configurations with a dictionary.
 *   **env = rlcard.make(env_id, config={})**: Make an environment. `env_id` is a string of a environment; `config` is a dictionary that specifies some environment configurations, which are as follows.
 	*   `seed`: Default `None`. Set a environment local random seed for reproducing the results.
@@ -203,41 +234,10 @@ Once the environemnt is made, we can access some information of the game.
 *   **env.state_shape**: The shape of the state space of the observations.
 *   **env.action_shape**: The shape of the action features (Dou Dizhu's action can encoded as features)
 
-### What is state in RLCard
+#### What is state in RLCard
 State is a Python dictionary. It consists of observation `state['obs']`, legal actions `state['legal_actions']`, raw observation `state['raw_obs']` and raw legal actions `state['raw_legal_actions']`.
 
-### Basic interfaces
+#### Basic interfaces
 The following interfaces provide a basic usage. It is easy to use but it has assumtions on the agent. The agent must follow [agent template](docs/developping-algorithms.md). 
 *   **env.set_agents(agents)**: `agents` is a list of `Agent` object. The length of the list should be equal to the number of the players in the game.
 *   **env.run(is_training=False)**: Run a complete game and return trajectories and payoffs. The function can be used after the `set_agents` is called. If `is_training` is `True`, it will use `step` function in the agent to play the game. If `is_training` is `False`, `eval_step` will be called instead.
-
-### Advanced interfaces
-For advanced usage, the following interfaces allow flexible operations on the game tree. These interfaces do not make any assumtions on the agent.
-*   **env.reset()**: Initialize a game. Return the state and the first player ID.
-*   **env.step(action, raw_action=False)**: Take one step in the environment. `action` can be raw action or integer; `raw_action` should be `True` if the action is raw action (string).
-*   **env.step_back()**: Available only when `allow_step_back` is `True`. Take one step backward. This can be used for algorithms that operate on the game tree, such as CFR (chance sampling).
-*   **env.is_over()**: Return `True` if the current game is over. Otherewise, return `False`.
-*   **env.get_player_id()**: Return the Player ID of the current player.
-*   **env.get_state(player_id)**: Return the state that corresponds to `player_id`.
-*   **env.get_payoffs()**: In the end of the game, return a list of payoffs for all the players.
-*   **env.get_perfect_information()**: (Currently only support some of the games) Obtain the perfect information at the current state.
-
-## Library Structure
-The purposes of the main modules are listed as below:
-
-*   [/examples](examples): Examples of using RLCard.
-*   [/docs](docs): Documentation of RLCard.
-*   [/tests](tests): Testing scripts for RLCard.
-*   [/rlcard/agents](rlcard/agents): Reinforcement learning algorithms and human agents.
-*   [/rlcard/envs](rlcard/envs): Environment wrappers (state representation, action encoding etc.)
-*   [/rlcard/games](rlcard/games): Various game engines.
-*   [/rlcard/models](rlcard/models): Model zoo including pre-trained models and rule models.
-
-## More Documents
-For more documentation, please refer to the [Documents](docs/README.md) for general introductions. API documents are available at our [website](http://www.rlcard.org).
-
-## Contributing
-Contribution to this project is greatly appreciated! Please create an issue for feedbacks/bugs. If you want to contribute codes, please refer to [Contributing Guide](./CONTRIBUTING.md). If you have any questions, please contact [Daochen Zha](https://github.com/daochenzha) with [daochen.zha@tamu.edu](mailto:daochen.zha@tamu.edu).
-
-## Acknowledgements
-We would like to thank JJ World Network Technology Co.,LTD for the generous support and all the contributions from the community contributors.

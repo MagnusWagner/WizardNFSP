@@ -11,13 +11,14 @@ from rlcard.utils import get_device, set_seed, tournament
 def load_model(model_path, env=None, position=None, device=None):
     if os.path.isfile(model_path):  # Torch model
         import torch
-        assert args.env == "wizard" or model_path.split("_")[1]==args.env.split("_")[1] 
+        assert args.env == "wizard" or args.env == "wizard_trickpreds" or model_path.split("_")[1]==args.env.split("_")[1] 
         agent = torch.load(model_path, map_location=device)
         agent.set_device(device)
     elif model_path == 'random':  # Random model
         from rlcard.agents import RandomAgent
         agent = RandomAgent(num_actions=env.num_actions)
-    
+    else: 
+        raise("No Agent found!")
     return agent
 
 def evaluate(args):
@@ -63,10 +64,10 @@ def evaluate(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("Evaluation of Wizard Bot")
-    parser.add_argument('--env', type=str, default="wizard_ms_trickpreds",choices=['wizard',"wizard_s_trickpreds","wizard_ms_trickpreds"])
-    parser.add_argument('--models', nargs='*', default=['experiments/wizard_ms_trickpreds_result_nfsp2/model.pth', 'random'])
+    parser.add_argument('--env', type=str, default="wizard",choices=['wizard_trickpreds',"wizard_s_trickpreds","wizard_ms_trickpreds",'wizard','wizard_simple','wizard_most_simple'])
+    parser.add_argument('--models', nargs='*', default=['experiments/wizard_nfsp_result/model.pth', 'random'])
     parser.add_argument('--cuda', type=str, default='')
-    parser.add_argument('--seed', type=int, default=1234572)
+    parser.add_argument('--seed', type=int, default=12172)
     parser.add_argument('--num_games', type=int, default=10000)
 
     args = parser.parse_args()

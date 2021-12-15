@@ -88,6 +88,15 @@ The purposes of the main modules are listed as below:
 *   [/rlcard/envs](rlcard/envs): Environment wrappers (state representation, action encoding etc.)
 *   [/rlcard/games](rlcard/games): The five wizard game engines are found in here.
 
+## Neural Fictitious Self-Play (NFSP)
+
+Neural Fictitious Self-Play is a variant of Fictitious Self-Play with Deep Reinforcement Learning to determine action values. The algorithm uses a random mix of predicting the best action from an input state via a classification network and maximizing action values with a Deep Q-Network.
+
+The way of researchers from finding Nash equilibria to creating a NFSP-Agent is schematically depicted in the following graphic.
+![Schematic progress from nash equilibria to neural fictitious self-play](NFSP_scheme.PNG)
+
+
+
 ## Run some examples
 
 In this section, I will explain how to run different examples.
@@ -177,7 +186,7 @@ As the previous steps were already explained, the last step can be accomplished 
 ```bash
 python examples/run_wizard_trickpred.py
 ```
-The options are the same as for the training without trick prediction. The only difference are the choices for the environment: ` ["wizard_ms_trickpreds, wizard_s_trickpreds"]`
+The options are the same as for the training without trick prediction. The only difference are the choices for the environment: ` ["wizard_trickpreds, wizard_s_trickpreds, wizard_ms_trickpreds"]`
 
 ## Results & Tests
 
@@ -197,7 +206,7 @@ Next to running the game, the engine interface also needs to work so that the ag
 The first three graphs show that training without trick predictions led to model improvement over time. Usually, I would have waited until convergence, but as my system (Ryzen 5 3600XT, Geforce RTX 3060 Ti) already took a lot of time for training, I usually stopped when the results were significantly better than random results.
 
 #### Default Wizard Engine Training with NFSP and Trick Prediction
-[CURRENTLY NOT YET AVAILABLE]
+![Wizard_Simple Engine Training with NFSP and Trick Prediction](experiments/wizard_trickpreds/model_improvement.png)
 #### Wizard_Simple Engine Training with NFSP and Trick Prediction
 ![Wizard_Simple Engine Training with NFSP and Trick Prediction](experiments/wizard_s_trickpreds_result_nfsp/model_improvement.png)
 #### Wizard_Most_Simple Engine Training with NFSP and Trick Prediction
@@ -205,7 +214,16 @@ The first three graphs show that training without trick predictions led to model
 
 The next graphs show performance on the game engine with trick prediction. It can be observed that the results slowly improve. Values of ~10 are not that good yet. When playing average games with 50% winrate and completely random guesses, a value of 10 would be a reasonable average as each correct prediction would result in 45 points on average whereas each wrong prediction would result in -25 points on average. As random agents perform worse, the baseline winrate is therefore lower than 50%. A maximum value of 18.35 for the most simple variant represents a good performance in comparison. It becomes obvious that the more complex environments need much longer training times as the state and legal action space is much larger.
 
-Both graphs had training times of about 6h each. [Other](https://arxiv.org/abs/1603.01121) [researchers](https://towardsdatascience.com/douzero-mastering-doudizhu-with-reinforcement-learning-864363549c6a) were training for several days with Multi-GPUs on similarly complex environments with other neural RL algorithms until convergence was achieved. Therefore, one can expect further improvement when training for longer on this environment as well.
+| Environment                                  | Agent Performance                                              | Random Performance                                        |
+| :------ | :-----: | :-----: | :-----: |
+|Wizard| 2.59 | 2.41 |
+|Wizard Simple| 2.65 | 2.35 |
+|Wizard Most Simple| 2.55 | 2.45 |
+|Wizard with predictions| 4.60 | 4.13 |
+|Wizard S with predictions| 10.31 | 8.86 |
+|Wizard MS with predictions| 17.52 | 9.99 |
+
+When looking at evaluation results from 1v1-games against random agents (created with the file `examples/evaluate_wizard.py`, it becomes obvious that some agents did not really learn much and have a lot of room for improvement. Another alternative would be to try out different algorithms. The NFSP algorithm is usually already better in terms of convergence regarding card games with imperfect information, but could be improved even more by [switching out the DQN-Agent against a DMC-Agent](https://deepai.org/publication/monte-carlo-neural-fictitious-self-play-achieve-approximate-nash-equilibrium-of-imperfect-information-games). On top of that, the two agents for the less complex prediction environments had training times of about 6h each and the agent for the main Wizard prediction environment was trained for 16h. [Other](https://arxiv.org/abs/1603.01121) [researchers](https://towardsdatascience.com/douzero-mastering-doudizhu-with-reinforcement-learning-864363549c6a) were training for several days with Multi-GPUs on similarly complex environments with other neural RL algorithms until convergence was achieved. Therefore, one can expect further improvement when training for longer on this environment as well.
 
 
 

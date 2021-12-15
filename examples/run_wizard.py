@@ -131,17 +131,17 @@ def train(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("NFSP Training with Wizard")
-    parser.add_argument('--env', type=str, default='wizard',
+    parser.add_argument('--env', type=str, default='wizard_most_simple',
             choices=['wizard',"wizard_simple","wizard_most_simple"])
     parser.add_argument('--algorithm', type=str, default='nfsp', choices=['nfsp','dqn'])
-    parser.add_argument('--load_model', type=bool, default=True, choices=[True,False]) # Change default to False for new model.
+    parser.add_argument('--load_model', type=bool, default=False, choices=[True,False]) # Change default to False for new model.
     parser.add_argument('--random_opponent', type=bool, default=True)
     parser.add_argument('--cuda', type=str, default='')
     parser.add_argument('--seed', type=int, default=45143982)
-    parser.add_argument('--num_episodes', type=int, default=50000)
+    parser.add_argument('--num_episodes', type=int, default=200) # Final testing
     parser.add_argument('--num_eval_games', type=int, default=4000)
     parser.add_argument('--evaluate_every', type=int, default=2000)
-    parser.add_argument('--log_dir', type=str, default='experiments/wizard_nfsp_result/')
+    parser.add_argument('--log_dir', type=str, default='experiments/newtest/') # Final testing
 
     args = parser.parse_args()
 

@@ -37,8 +37,8 @@ def run(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("Random example in RLCard")
-    parser.add_argument('--env', type=str, default='wizard_simple',
-            choices=['blackjack', 'leduc-holdem', 'limit-holdem', 'doudizhu', 'mahjong', 'no-limit-holdem', 'uno', 'gin-rummy','wizard','wizard_simple'])
+    parser.add_argument('--env', type=str, default='wizard_ms_trickpreds',
+            choices=['wizard_trickpreds',"wizard_s_trickpreds","wizard_ms_trickpreds",'wizard','wizard_simple','wizard_most_simple'])
 
     args = parser.parse_args()
     run(args)

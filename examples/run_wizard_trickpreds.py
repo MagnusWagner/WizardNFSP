@@ -37,14 +37,14 @@ def train(args):
     GAME_NUM_CARDS=5
 
     ### Settings to train
-    HIDDEN_LAYER_SIZE = 300
+    HIDDEN_LAYER_SIZE = 512
     RL_LR = 0.0005 #ms_trickpreds2
     Q_EPSILON_START = 0.5 #ms_trickpreds2
     # RL_LR = 0.00005 #s_trickpreds
     # Q_EPSILON_START = 0.8 #s_trickpreds
     # RL_LR = 0.01 #s_trickpreds2
     # Q_EPSILON_START = 0.5 #s_trickpreds2
-    Q_EPSILON_DECAY_STEPS=int(1e5)
+    Q_EPSILON_DECAY_STEPS=4*int(1e5)
 
     # Load paths
     load_path_main = os.path.join(args.log_dir, 'model.pth')
@@ -141,16 +141,16 @@ def train(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("NFSP example with Wizard & Trick Predictions")
-    parser.add_argument('--env', type=str, default='wizard_trickpreds',choices=['wizard_trickpreds',"wizard_s_trickpreds","wizard_ms_trickpreds"])
+    parser.add_argument('--env', type=str, default='wizard_ms_trickpreds',choices=['wizard_trickpreds',"wizard_s_trickpreds","wizard_ms_trickpreds"])
     parser.add_argument('--algorithm', type=str, default='nfsp', choices=['nfsp','dqn'])
-    parser.add_argument('--load_model', type=bool, default=True, choices=[True,False]) # Change default to False for new model.
+    parser.add_argument('--load_model', type=bool, default=False, choices=[True,False]) # Change default to False for new model.
     parser.add_argument('--random_opponent', type=bool, default=True, choices=[True,False]) # Change default to False for new model.
     parser.add_argument('--cuda', type=str, default='')
     parser.add_argument('--seed', type=int, default=19593121)
-    parser.add_argument('--num_episodes', type=int, default=20000)
-    parser.add_argument('--num_eval_games', type=int, default=4000)
-    parser.add_argument('--evaluate_every', type=int, default=2000)
-    parser.add_argument('--log_dir', type=str, default='experiments/wizard_s_trickpreds_result_nfsp')
+    parser.add_argument('--num_episodes', type=int, default=200)
+    parser.add_argument('--num_eval_games', type=int, default=100)
+    parser.add_argument('--evaluate_every', type=int, default=100)
+    parser.add_argument('--log_dir', type=str, default='experiments/newtest/') # Final testing
 
     args = parser.parse_args()
 

@@ -67,3 +67,4 @@ experiments/wizard_simple_nfsp_result/performance.csv
 experiments/wizard_simple_nfsp_result/trick_prediction_results/tp01.pickle
 experiments/wizard_simple_nfsp_result/trick_prediction_results/tp02.pickle
 experiments/wizard_s_trickpreds_result_nfsp/model copy.pth
+experiments/wizard_trickpreds/model.pth

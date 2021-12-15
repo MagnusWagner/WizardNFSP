@@ -91,7 +91,7 @@ class WizardEnv(Env):
         return ACTION_LIST[np.random.choice(legal_ids)]
 
     def _get_legal_actions(self):
-        legal_actions = self.game.get_legal_actions(self.game.players,self.game.current_player.player_id)
+        legal_actions = self.game.get_legal_actions()
         legal_ids = {ACTION_SPACE[action]: None for action in legal_actions}
         return OrderedDict(legal_ids)
 

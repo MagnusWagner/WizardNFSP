@@ -5,10 +5,10 @@ For my project in *Applied Deep Learning* @ TU Vienna, I trained a Neural Fictit
 ## Get started
 
 ### Installation of the rlcard library
-Make sure that you have **Python 3.6+** and **pip** installed. I recommend installing the stable version of `rlcard` with `pip`:
+Make sure that you have **Python 3.6+** but currently not Python 3.10+ and **pip** installed. I recommend installing the stable version of `rlcard` with `pip`:
 
 ```
-pip3 install rlcard
+pip3 install rlcard[torch]==1.0.5
 ```
 
 Conda installation is also provided from rlcard. [**conda** installation method](https://anaconda.org/toubun/rlcard):
@@ -22,11 +22,9 @@ conda install -c toubun rlcard
 To play against pre-trained models, you need to download a zip from [this link](https://drive.google.com/drive/folders/1SojZP7x6xBqEqGC9WhyDzt5SP818F3fN?usp=sharing) and merge it with the [/experiments](/experiments) folder found in this repository.
 
 ### Other dependencies
-- Install xgboost for the prediction models.
 ```
-pip install xgboost
+pip install -r requirements.txt
 ```
-- Install PyTorch from https://pytorch.org/.
 
 ## RLCard Framework
 

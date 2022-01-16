@@ -79,12 +79,12 @@ def run_example(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("Script to play wizard with humans/agents and trickpredictions")
-    parser.add_argument('--env', type=str, default='wizard', choices=['wizard', 'wizard_simple', 'wizard_most_simple'])
+    parser.add_argument('--env', type=str, default='wizard_simple', choices=['wizard', 'wizard_simple', 'wizard_most_simple'])
     parser.add_argument('--cuda', type=str, default='')
     parser.add_argument('--seed', type=int, default=45143982)
     parser.add_argument('--n_human_players', type=int, default=1, choices=[1,2])
     parser.add_argument('--opponent', type=str, default='nfsp', choices=['nfsp','random'])
-    parser.add_argument('--load_path_agent', type=str, default='experiments/wizard_result_nfsp/model.pth')
+    parser.add_argument('--load_path_agent', type=str, default='experiments/wizard_simple_nfsp_result/model.pth')
 
     args = parser.parse_args()
 

@@ -1,0 +1,7 @@
+tests
+experiments
+!experiments/wizard_s_trickpreds_result_nfsp/model.pth
+AppliedDL_Project_01_Initiate_Magnus.pdf
+NFSP_scheme.PNG
+Wizard_Rules.pdf
+XGB_Model_Training_Notebook.ipynb

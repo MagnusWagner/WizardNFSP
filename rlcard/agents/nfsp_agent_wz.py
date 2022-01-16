@@ -222,6 +222,8 @@ class NFSPAgentWZ(object):
         Returns:
             action_probs (numpy.array): The predicted action probability.
         '''
+        ### Only for docker!!!
+        self.device = torch.device("cpu")
         info_state = np.expand_dims(info_state, axis=0)
         info_state = torch.from_numpy(info_state).float().to(self.device)
 
@@ -285,6 +287,11 @@ class NFSPAgentWZ(object):
         return ce_loss
 
     def set_device(self, device):
+        #
+        #
+        #
+
+
         self.device = device
         self._rl_agent.set_device(device)
 

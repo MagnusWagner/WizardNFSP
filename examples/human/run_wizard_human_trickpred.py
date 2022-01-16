@@ -7,7 +7,7 @@ from rlcard.agents import RandomAgent
 import torch
 import os
 import argparse
-
+import random 
 def run_example(args):
     # Make environment
     config = {
@@ -19,7 +19,9 @@ def run_example(args):
             'opponent': args.opponent,
             'load_path_agent': args.load_path_agent,
     }
-
+    if config["seed"]==0:
+        config["seed"]=random.randint(1,100000)
+    
     environment_specific = config["env"].split("_")[1]
     # assert environment_specific == config["load_path_agent"].split("_")[1]
 
@@ -41,7 +43,8 @@ def run_example(args):
     # Append more agents to the game until the number of players is reached.
     for i in range(config["no_human_players"],config["game_num_players"]):
         if config["opponent"]=="nfsp":
-            additional_agent = torch.load(config["load_path_agent"])
+            # additional_agent = torch.load(config["load_path_agent"])
+            additional_agent = torch.load(config["load_path_agent"], map_location=torch.device('cpu'))
         else:
             additional_agent = RandomAgent(num_actions=env.num_actions)
         agents.append(additional_agent)
@@ -85,19 +88,19 @@ def run_example(args):
             if score == max_score:
                 winner_list.append(idx)
         if len(winner_list)==1:
-            print('Player',winner_list[0],'wins!')
+            print('Player',winner_list[0]+1,'wins!')
         else:
-            print('Players',winner_list,'win!')
+            print('Players',[winner+1 for winner in winner_list],'win!')
         print('')
         input("Press any key to continue...")
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("Script to play wizard with humans/agents and trickpredictions")
-    parser.add_argument('--env', type=str, default='wizard_trickpreds', choices=['wizard_trickpreds','wizard_s_trickpreds',"wizard_ms_trickpreds"])
+    parser.add_argument('--env', type=str, default='wizard_s_trickpreds', choices=['wizard_trickpreds','wizard_s_trickpreds',"wizard_ms_trickpreds"])
     parser.add_argument('--cuda', type=str, default='')
-    parser.add_argument('--seed', type=int, default=45143982)
-    parser.add_argument('--n_human_players', type=int, default=2, choices=[1,2])
+    parser.add_argument('--seed', type=int, default=0)
+    parser.add_argument('--n_human_players', type=int, default=1, choices=[1,2])
     parser.add_argument('--opponent', type=str, default='nfsp', choices=['nfsp','random'])
     parser.add_argument('--load_path_agent', type=str, default='experiments/wizard_s_trickpreds_result_nfsp/model.pth')
 

@@ -23,7 +23,7 @@ class WizardEnv(Env):
             self.config = DEFAULT_GAME_CONFIG
         self.seed = self.config["seed"]
         self.model_xgb = xgb.Booster()
-        self.model_xgb.load_model(f'C:/Users/Magnus/Documents/GitHub/rlcard/rlcard/games/wizard_s_trickpreds/xgb_models/{self.config["game_num_players"]}P{self.config["game_num_cards"]}C.json')
+        self.model_xgb.load_model(f'./rlcard/games/wizard_s_trickpreds/xgb_models/{self.config["game_num_players"]}P{self.config["game_num_cards"]}C.json')
         self.human_ids = list(np.arange(config['no_human_players']))
         self.game = WizardGame(num_players = self.config["game_num_players"],num_cards = self.config["game_num_cards"], seed=self.seed, trickpred_model=self.model_xgb, human_ids=self.human_ids)
         super().__init__(config)

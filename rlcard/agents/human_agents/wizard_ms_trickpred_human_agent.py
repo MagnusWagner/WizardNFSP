@@ -62,14 +62,14 @@ def _print_state(state, action_record):
             break
         _action_list.insert(0, action_record[-i])
     for pair in _action_list:
-        print('>> Player', pair[0], 'chooses ', end='')
+        print('>> Player', pair[0]+1, 'chooses ', end='')
         _print_action(pair[1])
         print('')
     print('=============== Current score ===============')
     print(["P"+str(idx)+": "+str(score)+"/"+str(state['predicted_tricks'][idx]) for idx, score in enumerate(state['trick_scores'])])
     print('')
-    print('=============== Player ',state["current_player"],"'s Turn")
-    print(f'=============== P{state["current_player"]} - Tricks left to make: '+str(state['tricks_left_to_get']))
+    print('=============== Player ',state["current_player"]+1,"'s Turn")
+    print(f'=============== P{state["current_player"]+1} - Tricks left to make: '+str(state['tricks_left_to_get']))
     print('=============== Trump Color: ',colored(COLOR_MAP_WORDS["r"], COLOR_MAP_WORDS["r"]))
     print('\n=============== Current Trick ===============')
     print('')
@@ -83,7 +83,7 @@ def _print_state(state, action_record):
     print('\n=============== Your Hand ===============')
     WizardCard.print_cards(state['hand'])
     print('')
-    print('\n======== P',state["current_player"],': Possible actions =========')
+    print('\n======== P',state["current_player"]+1,': Possible actions =========')
     for i, action in enumerate(state['legal_actions']):
         print(str(i)+': ', end='')
         WizardCard.print_cards(action)

@@ -23,7 +23,7 @@ class WizardEnv(Env):
             self.config = DEFAULT_GAME_CONFIG
         self.seed = self.config["seed"]
         self.model_xgb = xgb.Booster()
-        self.model_xgb.load_model(f'C:/Users/Magnus/Documents/GitHub/rlcard/rlcard/games/wizard_s_trickpreds/xgb_models/{self.config["game_num_players"]}P{self.config["game_num_cards"]}C.json')
+        self.model_xgb.load_model(f'./rlcard/games/wizard_s_trickpreds/xgb_models/{self.config["game_num_players"]}P{self.config["game_num_cards"]}C.json')
         self.game = WizardGame(num_players = self.config["game_num_players"],num_cards = self.config["game_num_cards"], seed=self.seed, trickpred_model=self.model_xgb)
         super().__init__(config)
         self.state_shape = [[96+5+1+1+4*self.num_players+1+1] for _ in range(self.num_players)]  
